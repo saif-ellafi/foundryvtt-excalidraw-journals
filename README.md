@@ -21,6 +21,10 @@ To use, simply enable this checkbox when creating a new Journal Entry:
 Check it out along my other modules (Search modules by JeansenVaars)
 #### [This module was made for free, with joy, long nights and because of hundred windows needed it, so tons of coffee :D!](https://ko-fi.com/jeansenvaars)
 
+### Appreciations
+
+Asacolips, Javiondox and ronix for cool ideas and testing help.
+
 # Issues?
 Go to the Issues section and let me know!
 

@@ -5,7 +5,13 @@ Excalidraw is a free and open source collaborative whiteboarding application. Dr
 
 With this module, create Journal Entries using an Excalidraw iframe that automatically creates a shareable session.
 
-It is using simple iframes. This is not doing anything special. Not yet exhaustively tested.
+It is using simple iframes. This is not doing anything special. Not yet exhaustively tested. Use at own risk. Have fun!.
+
+To use, simply enable this checkbox when creating a new Journal Entry:
+
+![img.png](instruction.png)
+
+![Example](excafoundry.gif)
 
 ### _By JeansenVaars_ - [Invite me to a Coffee](https://ko-fi.com/jeansenvaars) :) if you enjoy this module!
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/V7V14D3AH)

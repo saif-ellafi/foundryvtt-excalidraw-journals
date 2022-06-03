@@ -25,6 +25,10 @@ Check it out along my other modules (Search modules by JeansenVaars)
 
 Asacolips, Javiondox and ronix for cool ideas and testing help.
 
+### Future Ideas
+
+Make Character Sheet adapters, so we can create character sheets with this system.
+
 # Issues?
 Go to the Issues section and let me know!
 

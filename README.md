@@ -7,6 +7,8 @@ With this module, create Journal Entries using an Excalidraw iframe that automat
 
 It is using simple iframes. This is not doing anything special. Not yet exhaustively tested. Use at own risk. Have fun!.
 
+https://excalidraw.com/
+
 To use, simply enable this checkbox when creating a new Journal Entry:
 
 ![img.png](instruction.png)

@@ -1,6 +1,6 @@
 {
   "name": "foundryvtt-excalidraw-journals",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Whiteboard in realtime with your players. Freeform drawings and Arrows in a journal entry!",
   "main": "excalidraw-journals.js",
   "scripts": {

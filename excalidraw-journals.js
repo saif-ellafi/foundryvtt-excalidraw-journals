@@ -21,7 +21,7 @@ function _excaMakeRoomCypher() {
 }
 
 Hooks.on('renderDialog', function (dialog, elem) {
-  if (dialog.title === 'Create New Journal Entry') {
+  if (dialog.title === game.i18n.localize('DOCUMENT.Create').replace('{type}', game.i18n.localize('DOCUMENT.JournalEntry'))) {
     elem.find("#document-create").last().append(`
           <div class="form-group">
             <label for="excalidraw">Excalidraw</label>
@@ -30,7 +30,6 @@ Hooks.on('renderDialog', function (dialog, elem) {
           `
     );
     elem.outerHeight(elem.outerHeight() + 35);
-    console.log(dialog);
   }
 });
 

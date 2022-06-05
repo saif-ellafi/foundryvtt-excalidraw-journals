@@ -21,6 +21,12 @@ To use, simply enable this checkbox when creating a new Journal Entry:
 Check it out along my other modules (Search modules by JeansenVaars)
 #### [This module was made for free, with joy, long nights and because of hundred windows needed it, so tons of coffee :D!](https://ko-fi.com/jeansenvaars)
 
+## Caveats (Can be fixed eventually)
+
+* This is embedding the online version of excalidraw (i.e. requires internet connection)
+* Dark/Light mode not remembered
+* Excalidraw Data not stored in your world, but rather online
+
 ### Appreciations
 
 Asacolips, Javiondox and ronix for cool ideas and testing help.

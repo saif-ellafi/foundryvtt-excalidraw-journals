@@ -1,3 +1,14 @@
+import 'react';
+import 'react-dom';
+import '@excalidraw/excalidraw'
+import '../styles/styles.css';
+
+import React from "react";
+import ReactDOM from "react-dom";
+
+import {App} from "./App";
+
+
 // https://excalidraw.com/#room=[0-9a-f]{20},[a-zA-Z0-9_-]{22}
 
 function _excaMakeRoomId() {
@@ -33,7 +44,7 @@ Hooks.on('renderDialog', function (dialog, elem) {
   }
 });
 
-Hooks.on('preCreateJournalEntry', function (entry, params, options) {
+Hooks.on('preCreateJournalEntry', function (entry, params) {
   if (params.excalidraw) {
     const roomCode = _excaMakeRoomId();
     const roomCypher = _excaMakeRoomCypher();
@@ -48,3 +59,34 @@ Hooks.on('preCreateJournalEntry', function (entry, params, options) {
     });
   }
 });
+
+class ExcalidrawSheet extends ActorSheet {
+
+  static get defaultOptions() {
+    const _default = super.defaultOptions;
+
+    return {
+      ..._default,
+      classes: ['sheet', 'actor', 'excalidraw-actor', 'form'],
+      width: canvas.screenDimensions[0] * 0.50,
+      height: canvas.screenDimensions[1] * 0.75,
+      resizable: true,
+      template: `./modules/excalidraw-journals/excalidraw-actor.hbs`
+    };
+  }
+
+  render(force, options) {
+    super.render(force, options);
+    setTimeout(() => {
+      console.log(this);
+      const excalidrawWrapper = this.element.find("#excalidraw-actor-app")[0];
+      ReactDOM.render(React.createElement(App), excalidrawWrapper);
+    }, 500);
+    return this;
+  }
+
+}
+
+Hooks.once('ready', function () {
+  Actors.registerSheet('excalidraw-journals', ExcalidrawSheet);
+})

@@ -2,10 +2,12 @@
   "name": "foundryvtt-excalidraw-journals",
   "version": "1.0.2",
   "description": "Whiteboard in realtime with your players. Freeform drawings and Arrows in a journal entry!",
-  "main": "excalidraw-journals.js",
+  "main": "src/excalidraw-journals.js",
   "scripts": {
-    "copy": "mkdir -p dist && cp ./excalidraw-journals.js dist/ && cp ./README.md dist/ && cp ./CHANGELOG.md dist/ && cp ./LICENSE.md dist/ && cp ./module.json dist/ && cp ./THANKS.txt dist/",
-    "copyWin": "mkdir dist && copy module.json dist && copy excalidraw-journals.js dist && copy README.md dist && copy CHANGELOG.md dist && copy LICENSE.md dist && copy module.json dist && copy THANKS.txt dist",
+    "copy": "cp ./templates/excalidraw-actor.hbs dist/ && ./README.md dist/ && cp ./CHANGELOG.md dist/ && cp ./LICENSE.md dist/ && cp ./module.json dist/ && cp ./THANKS.txt dist/",
+    "copyWin": "copy templates\\excalidraw-actor.hbs dist && README.md dist && copy CHANGELOG.md dist && copy LICENSE.md dist && copy module.json dist && copy THANKS.txt dist",
+    "build": "rollup --config ./rollup.config.js && npm run copy",
+    "buildWin": "rollup --config ./rollup.config.js && npm run copyWin",
     "zip": "npm-build-zip --source=dist --destination=.",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,6 +28,27 @@
   },
   "homepage": "https://github.com/saif-ellafi/foundryvtt-excalidraw-journals",
   "devDependencies": {
-    "npm-build-zip": "^1.0.3"
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "npm-build-zip": "^1.0.3",
+    "rollup-plugin-replace": "^2.2.0"
+  },
+  "dependencies": {
+    "@excalidraw/excalidraw": "0.11.0",
+    "@rollup/plugin-commonjs": "^22.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rollup-plugin-css-porter": "^1.0.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

@@ -25,8 +25,20 @@ Hooks.on('renderDialog', function (dialog, elem) {
     elem.find("#document-create").last().append(`
           <div class="form-group">
             <label for="excalidraw">Excalidraw</label>
-            <div class="form-fields"><input type="checkbox" id="excalidraw" name="excalidraw"></div>
+            <div class="form-fields" style="justify-content: center;"><input type="checkbox" id="excalidraw" name="excalidraw" onclick="toggle()"></div>
+            <label for="exc_shared">Shared</label>
+            <div class="form-fields" style="justify-content: center;"><input type="checkbox" checked disabled id="exc_shared" name="exc_shared"></div>
           </div>
+          <script>
+          function toggle() {
+            let enabled = $("#excalidraw").prop('checked');
+            if (enabled) {
+              $("#exc_shared").prop('disabled', false);
+            } else {
+              $("#exc_shared").prop('disabled', true);
+            }
+          }
+          </script>
           `
     );
     elem.outerHeight(elem.outerHeight() + 35);
@@ -35,11 +47,15 @@ Hooks.on('renderDialog', function (dialog, elem) {
 
 Hooks.on('preCreateJournalEntry', function (entry, params, options) {
   if (params.excalidraw) {
-    const roomCode = _excaMakeRoomId();
-    const roomCypher = _excaMakeRoomCypher();
+    let room = ''
+    if (params.exc_offline) {
+      const roomCode = _excaMakeRoomId();
+      const roomCypher = _excaMakeRoomCypher();
+      `#room=${roomCode},${roomCypher}`;
+    }
     entry.data.update({
       content: `
-      <div style="height: 100%;"><iframe src="https://excalidraw.com/#room=${roomCode},${roomCypher}" width="100%" height="100%"></iframe></div>
+      <div style="height: 100%;"><iframe src="https://excalidraw.com/${room}" width="100%" height="100%"></iframe></div>
       `
     });
     Hooks.once('createJournalEntry', function (journal) {

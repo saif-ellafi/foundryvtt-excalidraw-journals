@@ -1,3 +1,7 @@
+## 1.3.0
+* Improved stability by switching logic to sheet instead of modes
+* Support for Excalidraw as sheet for items
+
 ## 1.2.0
 * Closing a Whiteboard now takes 20 seconds of "safety time" to ensure data is in sync with the cloud
 * Journal Sheets now handled as "Sheet Modes" (You can switch between text, image and excalidraw modes)

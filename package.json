@@ -1,7 +1,7 @@
 {
   "name": "foundryvtt-excalidraw-journals",
   "version": "1.2.0",
-  "description": "Whiteboard in realtime with your players. Freeform drawings and Arrows in a journal entry!",
+  "description": "Whiteboard in realtime with your players. Freeform drawings and Arrows in a journal entry or actor!",
   "main": "excalidraw-journals.js",
   "scripts": {
     "copy": "mkdir -p dist && cp ./excalidraw-journals.js dist/ && cp excalidraw-sheet.hbs dist/ && cp ./README.md dist/ && cp ./CHANGELOG.md dist/ && cp ./LICENSE.md dist/ && cp ./module.json dist/ && cp ./THANKS.txt dist/",

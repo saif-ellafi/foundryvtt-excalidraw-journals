@@ -1,7 +1,7 @@
 {
   "name": "excalidraw-journals",
-  "title": "Excalidraw Journals",
-  "description": "Whiteboard in realtime with your players. Freeform drawings and Arrows in a journal entry!",
+  "title": "Excalidraw Journals and Actors",
+  "description": "Whiteboard in realtime with your players. Freeform drawings and Arrows in a journal entry or actor!",
   "authors": ["JeansenVaars"],
   "version": "1.2.0",
   "minimumCoreVersion": "9",

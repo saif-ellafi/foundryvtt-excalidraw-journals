@@ -48,3 +48,68 @@ Hooks.on('preCreateJournalEntry', function (entry, params, options) {
     });
   }
 });
+
+class ExcalidrawSheet extends ActorSheet {
+
+  async getData() {
+    const _default = super.getData();
+
+    if (!this.actor.getFlag('excalidraw-journals', 'room')) {
+      await this.actor.setFlag('excalidraw-journals', 'room', {
+        roomCode: _excaMakeRoomId(),
+        roomCypher: _excaMakeRoomCypher()
+      })
+    }
+
+    if (!this.actor.roomCode) {
+      this.actor.roomCode = this.actor.getFlag('excalidraw-journals', 'room').roomCode;
+      this.actor.roomCypher = this.actor.getFlag('excalidraw-journals', 'room').roomCypher;
+    }
+
+    return {
+      ..._default,
+      roomCode: this.actor.roomCode,
+      roomCypher: this.actor.roomCypher,
+    };
+  }
+
+
+  static get defaultOptions() {
+    const _default = super.defaultOptions;
+
+    return {
+      ..._default,
+      classes: ['sheet', 'actor', 'excalidraw-actor', 'form'],
+      width: canvas.screenDimensions[0] * 0.50,
+      height: canvas.screenDimensions[1] * 0.75,
+      resizable: true,
+      template: `./modules/excalidraw-journals/excalidraw-actor.hbs`,
+      params: {width: 999},
+      options: {width: 988}
+    };
+  }
+
+}
+
+Hooks.once('ready', function () {
+  Actors.registerSheet('excalidraw-journals', ExcalidrawSheet);
+})
+
+Hooks.on('getSceneControlButtons', function(controls) {
+  const excalidrawPopup = new Dialog({
+    title: 'Excalidraw (Private)',
+    content: `<div style="height: ${canvas.screenDimensions[1] * 0.70}px"><iframe src="https://excalidraw.com" width="100%" height="100%"></iframe></div>`,
+    buttons: {}
+  });
+  excalidrawPopup.options.resizable = true;
+  excalidrawPopup.position.width = canvas.screenDimensions[0] * 0.50;
+  excalidrawPopup.position.height = canvas.screenDimensions[1] * 0.75;
+  controls.find(c => c.name === 'notes').tools.push({
+    button: true,
+    icon: "fas fa-book",
+    name: "excalidraw-notes",
+    onClick: () => excalidrawPopup.render(true),
+    title: "Excalidraw",
+    visible: true
+  })
+});

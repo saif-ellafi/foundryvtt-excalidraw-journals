@@ -5,15 +5,27 @@ Excalidraw is a free and open source collaborative virtual whiteboard for sketch
 
 With this module, create Journal Entries using an Excalidraw iframe that automatically creates a shareable session.
 
-It is using simple iframes. This is not doing anything special. Not yet exhaustively tested. Use at own risk. Have fun!.
+**This module is embedding Excalidraws Online version!**
 
-https://excalidraw.com/
+## Do NOT close the Journals so quickly after editing! It auto-saves every 10s or so.
 
-To use, simply enable this checkbox when creating a new Journal Entry:
+## Usage
 
-![img.png](instruction.png)
+### 1. Journal Entries
 
-![img.png](example.png)
+![instruction.png](instruction.png)
+
+### 2. As Actor Sheets
+
+![charsheet.png](charsheet.png)
+
+### 3. A private permanent Whiteboard (Private)
+
+![private.png](private.png)
+
+### Example
+
+![example.png](example.png)
 
 ### _By JeansenVaars_ - [Invite me to a Coffee](https://ko-fi.com/jeansenvaars) :) if you enjoy this module!
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/V7V14D3AH)

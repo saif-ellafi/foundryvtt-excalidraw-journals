@@ -39,7 +39,7 @@ Hooks.on('preCreateJournalEntry', function (entry, params, options) {
     const roomCypher = _excaMakeRoomCypher();
     entry.data.update({
       content: `
-      <div style="height: 100%;"><iframe src="https://excalidraw.com/#room=${roomCode},${roomCypher}" width="100%" height="100%"></iframe></div>
+      <div style="height: 100%;"><iframe src="https://excalidraw.com/#room=${roomCode},${roomCypher}" width="100%" height="100%"></div>
       `
     });
     Hooks.once('createJournalEntry', function (journal) {
@@ -98,7 +98,7 @@ Hooks.once('ready', function () {
 Hooks.on('getSceneControlButtons', function(controls) {
   const excalidrawPopup = new Dialog({
     title: 'Excalidraw (Private)',
-    content: `<div style="height: ${canvas.screenDimensions[1] * 0.70}px"><iframe src="https://excalidraw.com" width="100%" height="100%"></iframe></div>`,
+    content: `<div style="height: ${canvas.screenDimensions[1] * 0.70}px"><iframe src="https://excalidraw.com" width="100%" height="100%"></div>`,
     buttons: {}
   });
   excalidrawPopup.options.resizable = true;

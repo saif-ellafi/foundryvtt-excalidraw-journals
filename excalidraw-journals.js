@@ -20,59 +20,40 @@ function _excaMakeRoomCypher() {
   return result;
 }
 
-Hooks.on('renderDialog', function (dialog, elem) {
-  if (dialog.title === game.i18n.localize('DOCUMENT.Create').replace('{type}', game.i18n.localize('DOCUMENT.JournalEntry'))) {
-    elem.find("#document-create").last().append(`
-          <div class="form-group">
-            <label for="excalidraw">Excalidraw</label>
-            <div class="form-fields"><input type="checkbox" id="excalidraw" name="excalidraw"></div>
-          </div>
-          `
-    );
-    elem.outerHeight(elem.outerHeight() + 35);
-  }
-});
+function _excaDelayedClose(app, fallback) {
+  app.element.find('.window-header')[0].innerHTML = 'Saving...';
+  app.minimize();
+  setTimeout(() => {fallback()}, 20000);
+}
 
-Hooks.on('preCreateJournalEntry', function (entry, params, options) {
-  if (params.excalidraw) {
-    const roomCode = _excaMakeRoomId();
-    const roomCypher = _excaMakeRoomCypher();
-    entry.data.update({
-      content: `
-      <div style="height: 100%;"><iframe src="https://excalidraw.com/#room=${roomCode},${roomCypher}" width="100%" height="100%"></div>
-      `
-    });
-    Hooks.once('createJournalEntry', function (journal) {
-      journal.sheet.position.width = canvas.screenDimensions[0] * 0.50;
-      journal.sheet.position.height = canvas.screenDimensions[1] * 0.75;
-    });
+async function _excaAssignRoom(document) {
+  if (!document.getFlag('excalidraw-journals', 'room')) {
+    await document.setFlag('excalidraw-journals', 'room', {
+      roomCode: _excaMakeRoomId(),
+      roomCypher: _excaMakeRoomCypher()
+    })
   }
-});
+  if (!document.roomCode) {
+    document.roomCode = document.getFlag('excalidraw-journals', 'room').roomCode;
+    document.roomCypher = document.getFlag('excalidraw-journals', 'room').roomCypher;
+  }
+}
 
-class ExcalidrawSheet extends ActorSheet {
+class ExcalidrawActor extends ActorSheet {
+
+  close() {
+    _excaDelayedClose(this, () => super.close());
+  }
 
   async getData() {
     const _default = super.getData();
-
-    if (!this.actor.getFlag('excalidraw-journals', 'room')) {
-      await this.actor.setFlag('excalidraw-journals', 'room', {
-        roomCode: _excaMakeRoomId(),
-        roomCypher: _excaMakeRoomCypher()
-      })
-    }
-
-    if (!this.actor.roomCode) {
-      this.actor.roomCode = this.actor.getFlag('excalidraw-journals', 'room').roomCode;
-      this.actor.roomCypher = this.actor.getFlag('excalidraw-journals', 'room').roomCypher;
-    }
-
+    _excaAssignRoom(this.actor);
     return {
       ..._default,
       roomCode: this.actor.roomCode,
       roomCypher: this.actor.roomCypher,
     };
   }
-
 
   static get defaultOptions() {
     const _default = super.defaultOptions;
@@ -83,18 +64,40 @@ class ExcalidrawSheet extends ActorSheet {
       width: canvas.screenDimensions[0] * 0.50,
       height: canvas.screenDimensions[1] * 0.75,
       resizable: true,
-      template: `./modules/excalidraw-journals/excalidraw-actor.hbs`,
-      params: {width: 999},
-      options: {width: 988}
+      template: `./modules/excalidraw-journals/excalidraw-sheet.hbs`
     };
   }
 
 }
 
+// Adds Excalidraw as a Sheet Mode for Journal Entries
 Hooks.once('ready', function () {
-  Actors.registerSheet('excalidraw-journals', ExcalidrawSheet);
-})
+  Actors.registerSheet('excalidraw-journals', ExcalidrawActor);
 
+  Hooks.on('getJournalSheetHeaderButtons', function(app, buttons) {
+    if (app.constructor.name === 'JournalSheet') {
+      buttons.unshift({
+        label: "Excalidraw",
+        class: "entry-excalidraw",
+        icon: "fas fa-pen-alt",
+        onclick: async ev => app._onSwapMode(ev, "excalidraw")
+      })
+    }
+  });
+
+  libWrapper.register('excalidraw-journals', 'JournalSheet.prototype.template', function (wrapped, ...args) {
+    if ( this._close) this.close = this._close;
+    if ( this._sheetMode === "image" ) return ImagePopout.defaultOptions.template
+    else if (this._sheetMode === "excalidraw") {
+      _excaAssignRoom(this.document);
+      this._close = this.close;
+      this.close = () => _excaDelayedClose(this, () => this._close());
+      return `./modules/excalidraw-journals/excalidraw-sheet.hbs`
+    } else return "templates/journal/sheet.html";
+  }, 'OVERRIDE');
+});
+
+// Adds Journal Note offline Excalidraw to left controls
 Hooks.on('getSceneControlButtons', function(controls) {
   const excalidrawPopup = new Dialog({
     title: 'Excalidraw (Private)',

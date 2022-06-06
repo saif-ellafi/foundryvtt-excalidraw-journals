@@ -7,7 +7,7 @@ With this module, create Journal Entries using an Excalidraw iframe that automat
 
 **This module is embedding Excalidraws Online version!**
 
-## Do NOT close the Journals so quickly after editing! It auto-saves every 10s or so.
+_Maybe in the future I can work out a native implementation that stays within your world. Help is welcome!_
 
 ## Usage
 

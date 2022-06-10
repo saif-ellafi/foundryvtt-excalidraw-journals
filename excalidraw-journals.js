@@ -75,7 +75,7 @@ class ExcalidrawJournal extends JournalSheet {
 
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons()
-      .filter(b => b.label === 'Close');
+      .filter(b => b.class === 'close');
     if (game.user.isGM) {
       buttons.unshift({
         label: "Journal",
@@ -169,7 +169,7 @@ Hooks.once('ready', function () {
   Items.registerSheet('excalidraw-journals', ExcalidrawItem);
 
   Hooks.on('getJournalSheetHeaderButtons', function(app, buttons) {
-    if (app.object._getSheetClass().name !== 'ExcalidrawJournal') {
+    if (app.document.testUserPermission(game.user, 3) && app.object._getSheetClass().name !== 'ExcalidrawJournal') {
       buttons.unshift({
         label: "Excalidraw",
         class: "entry-excalidraw",

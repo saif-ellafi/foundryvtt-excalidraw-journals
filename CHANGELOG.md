@@ -1,3 +1,7 @@
+## 1.3.1
+* Added missing close buttons on Excalidraw sheets :)
+* Hidden Excalidraw converter button when player has no permissions to update
+
 ## 1.3.0
 * Improved stability by switching logic to sheet instead of modes
 * Support for Excalidraw as sheet for items

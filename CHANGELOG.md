@@ -1,3 +1,7 @@
+## 1.3.2
+* Fixed Missing header buttons in Excalidraw Windows
+* Added checkbox back to quickly directly create an Excalidraw Journal
+
 ## 1.3.1
 * Added missing close buttons on Excalidraw sheets :)
 * Hidden Excalidraw converter button when player has no permissions to update

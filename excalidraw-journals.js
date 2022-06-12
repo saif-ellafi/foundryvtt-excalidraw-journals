@@ -40,6 +40,15 @@ async function _excaAssignRoom(document) {
   }
 }
 
+async function _excaRenderSheet(app) {
+  const sheet = app.object.sheet;
+  await sheet.close()
+  app.object._sheet = null;
+  delete app.object.apps[sheet.appId];
+  await app.document.setFlag('core', 'sheetClass', `excalidraw-journals.ExcalidrawJournal`);
+  app.object.sheet.render(true);
+}
+
 class ExcalidrawActor extends ActorSheet {
 
   close() {
@@ -75,7 +84,7 @@ class ExcalidrawJournal extends JournalSheet {
 
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons()
-      .filter(b => b.class === 'close');
+      .filter(b => !b.label.startsWith('JOURNAL'));
     if (game.user.isGM) {
       buttons.unshift({
         label: "Journal",
@@ -174,14 +183,7 @@ Hooks.once('ready', function () {
         label: "Excalidraw",
         class: "entry-excalidraw",
         icon: "fas fa-pen-alt",
-        onclick: async ev => {
-          const sheet = app.object.sheet;
-          await sheet.close()
-          app.object._sheet = null;
-          delete app.object.apps[sheet.appId];
-          await app.document.setFlag('core', 'sheetClass', `excalidraw-journals.ExcalidrawJournal`);
-          app.object.sheet.render(true);
-        }
+        onclick: async ev => _excaRenderSheet(app)
       });
     }
   });
@@ -205,4 +207,29 @@ Hooks.on('getSceneControlButtons', function(controls) {
     title: "Excalidraw",
     visible: true
   })
+});
+
+Hooks.on('renderDialog', function (dialog, elem) {
+  if (dialog.title === game.i18n.localize('DOCUMENT.Create').replace('{type}', game.i18n.localize('DOCUMENT.JournalEntry'))) {
+    elem.find("#document-create").last().append(`
+          <div class="form-group">
+            <label for="excalidraw">Excalidraw</label>
+            <div class="form-fields"><input type="checkbox" id="excalidraw" name="excalidraw"></div>
+          </div>
+          `
+    );
+    elem.outerHeight(elem.outerHeight() + 35);
+  }
+});
+
+Hooks.on('preCreateJournalEntry', function (entry, params, options) {
+  if (params.excalidraw) {
+    Hooks.once('createJournalEntry', function(journal) {
+      journal.sheet.position.width = canvas.screenDimensions[0] * 0.50;
+      journal.sheet.position.height = canvas.screenDimensions[1] * 0.75;
+    });
+    Hooks.once('renderJournalSheet', async function (journal) {
+      _excaRenderSheet(journal);
+    });
+  }
 });

@@ -208,28 +208,3 @@ Hooks.on('getSceneControlButtons', function(controls) {
     visible: true
   })
 });
-
-Hooks.on('renderDialog', function (dialog, elem) {
-  if (dialog.title === game.i18n.localize('DOCUMENT.Create').replace('{type}', game.i18n.localize('DOCUMENT.JournalEntry'))) {
-    elem.find("#document-create").last().append(`
-          <div class="form-group">
-            <label for="excalidraw">Excalidraw</label>
-            <div class="form-fields"><input type="checkbox" id="excalidraw" name="excalidraw"></div>
-          </div>
-          `
-    );
-    elem.outerHeight(elem.outerHeight() + 35);
-  }
-});
-
-Hooks.on('preCreateJournalEntry', function (entry, params, options) {
-  if (params.excalidraw) {
-    Hooks.once('createJournalEntry', function(journal) {
-      journal.sheet.position.width = canvas.screenDimensions[0] * 0.50;
-      journal.sheet.position.height = canvas.screenDimensions[1] * 0.75;
-    });
-    Hooks.once('renderJournalSheet', async function (journal) {
-      _excaRenderSheet(journal);
-    });
-  }
-});

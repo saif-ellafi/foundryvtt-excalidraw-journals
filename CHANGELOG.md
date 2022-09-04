@@ -1,3 +1,6 @@
+## 1.4.0
+* Support for V10 (retro-compatible too, yay!)
+
 ## 1.3.2
 * Fixed Missing header buttons in Excalidraw Windows
 * Added checkbox back to quickly directly create an Excalidraw Journal

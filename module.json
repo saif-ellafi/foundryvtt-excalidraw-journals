@@ -7,9 +7,9 @@
   "minimumCoreVersion": "9",
   "compatibleCoreVersion": "9",
   "compatibility": {
-    "minimum": 9,
+    "minimum": "9",
     "verified": "10.284",
-    "maximum": 10
+    "maximum": "10"
   },
   "dependencies": [
     {"name": "lib-wrapper"}

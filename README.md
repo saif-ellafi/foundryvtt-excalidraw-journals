@@ -3,20 +3,32 @@
 
 Excalidraw is a free and open source collaborative virtual whiteboard for sketching and diagrams. With this, you can brainstorm together very easily with your players.
 
-With this module, create Journal Entries using an Excalidraw iframe that automatically creates a shareable session.
+With this module, create Journal Entries or even Actors, using an Excalidraw board that automatically syncs with your players.
 
-It is using simple iframes. This is not doing anything special. Not yet exhaustively tested. Use at own risk. Have fun!.
+**This module is embedding Excalidraw Online version!**
 
-https://excalidraw.com/
-
-To use, simply enable this checkbox when creating a new Journal Entry:
-
-![img.png](instruction.png)
-
-![img.png](example.png)
+_Maybe in the future I can work out a native implementation that stays within your world. Help is welcome!_
 
 ### _By JeansenVaars_ - [Invite me to a Coffee](https://ko-fi.com/jeansenvaars) :) if you enjoy this module!
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/V7V14D3AH)
+
+### Example
+
+![example2.png](example2.png)
+
+## Usage
+
+### 1. Journal Entries
+
+![instruction.png](instruction.png)
+
+### 2. As Actor Sheets
+
+![charsheet.png](charsheet.png)
+
+### 3. A private permanent Whiteboard (Private)
+
+![private.png](private.png)
 
 Check it out along my other modules (Search modules by JeansenVaars)
 #### [This module was made for free, with joy, long nights and because of hundred windows needed it, so tons of coffee :D!](https://ko-fi.com/jeansenvaars)

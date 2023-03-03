@@ -1,9 +1,11 @@
 {
   "name": "foundryvtt-excalidraw-journals",
-  "version": "1.0.2",
-  "description": "Whiteboard in realtime with your players. Freeform drawings and Arrows in a journal entry!",
+  "version": "1.4.0",
+  "description": "Whiteboard in realtime with your players. Freeform drawings and Arrows in a journal entry or actor!",
   "main": "src/excalidraw-journals.js",
   "scripts": {
+    "copy": "mkdir -p dist && cp ./excalidraw-journals.js dist/ && cp excalidraw-sheet.hbs dist/ && cp ./README.md dist/ && cp ./CHANGELOG.md dist/ && cp ./LICENSE.md dist/ && cp ./module.json dist/ && cp ./THANKS.txt dist/",
+    "copyWin": "mkdir dist && copy module.json dist && copy excalidraw-journals.js dist && copy excalidraw-sheet.hbs dist && copy README.md dist && copy CHANGELOG.md dist && copy LICENSE.md dist && copy module.json dist && copy THANKS.txt dist",
     "copy": "cp ./templates/excalidraw-actor.hbs dist/ && ./README.md dist/ && cp ./CHANGELOG.md dist/ && cp ./LICENSE.md dist/ && cp ./module.json dist/ && cp ./THANKS.txt dist/",
     "copyWin": "copy templates\\excalidraw-actor.hbs dist && README.md dist && copy CHANGELOG.md dist && copy LICENSE.md dist && copy module.json dist && copy THANKS.txt dist",
     "build": "rollup --config ./rollup.config.js && npm run copy",
@@ -38,17 +40,5 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup-plugin-css-porter": "^1.0.2"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   }
 }

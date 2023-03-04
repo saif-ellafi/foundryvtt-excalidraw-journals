@@ -1,19 +1,19 @@
-import React from "react";
-import Excalidraw from "@excalidraw/excalidraw/dist/excalidraw.development";
+import React, {useRef} from "react";
+import {Excalidraw} from "@excalidraw/excalidraw";
 
 export const App = () => {
-  const excalidrawWrapperRef = React.useRef(null);
-
-  return React.createElement(
-    React.Fragment,
-    null,
-    React.createElement(
-      "div",
-      {
-        className: "excalidraw-wrapper",
-        ref: excalidrawWrapperRef
-      },
-      React.createElement(Excalidraw.default)
-    )
-  );
+  const excalidrawRef = useRef(null);
+  window["excalidraw"] = excalidrawRef.current;
+  return (
+    <>
+      <div style={
+        {
+          height: ((canvas.screenDimensions[1] * 0.75) - 60) + 'px',
+          width: (canvas.screenDimensions[0] * 0.50) + 'px',
+        }
+      }>
+        <Excalidraw/>
+      </div>
+    </>
+  )
 }

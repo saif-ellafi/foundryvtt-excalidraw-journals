@@ -1,10 +1,8 @@
-import 'react';
-import 'react-dom';
-import '@excalidraw/excalidraw'
 import '../styles/styles.css';
 
+import {StrictMode} from "react";
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 
 import {App} from "./App";
 
@@ -70,7 +68,7 @@ class ExcalidrawSheet extends ActorSheet {
       classes: ['sheet', 'actor', 'excalidraw-actor', 'form'],
       width: canvas.screenDimensions[0] * 0.50,
       height: canvas.screenDimensions[1] * 0.75,
-      resizable: true,
+      resizable: false,
       template: `./modules/excalidraw-journals/excalidraw-actor.hbs`
     };
   }
@@ -80,9 +78,25 @@ class ExcalidrawSheet extends ActorSheet {
     setTimeout(() => {
       console.log(this);
       const excalidrawWrapper = this.element.find("#excalidraw-actor-app")[0];
-      ReactDOM.render(React.createElement(App), excalidrawWrapper);
+      const root = ReactDOM.createRoot(excalidrawWrapper);
+      root.render(
+        <StrictMode>
+          <App />
+        </StrictMode>
+      )
     }, 500);
     return this;
+  }
+
+  async close(options) {
+    /**
+     * >>> Somehow call
+     * serializeAsJSON({
+     *   elements: ExcalidrawElement[],
+     *   appState: AppState,
+     * }): string
+     */
+    return super.close(options);
   }
 
 }

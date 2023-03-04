@@ -40,14 +40,14 @@ async function _excaAssignRoom(document) {
   }
 }
 
-async function _excaRenderSheet(app) {
-  const sheet = app.object.sheet;
-  await sheet.close()
-  app.object._sheet = null;
-  delete app.object.apps[sheet.appId];
-  await app.document.setFlag('core', 'sheetClass', `excalidraw-journals.ExcalidrawJournal`);
-  app.object.sheet.render(true);
-}
+// async function _excaRenderSheet(app) {
+//   const sheet = app.object.sheet;
+//   await sheet.close()
+//   app.object._sheet = null;
+//   delete app.object.apps[sheet.appId];
+//   await app.document.setFlag('core', 'sheetClass', `excalidraw-journals.ExcalidrawJournal`);
+//   app.object.sheet.render(true);
+// }
 
 class ExcalidrawActor extends ActorSheet {
 
@@ -80,31 +80,16 @@ class ExcalidrawActor extends ActorSheet {
 
 }
 
-class ExcalidrawJournal extends JournalSheet {
+class ExcalidrawJournalPage extends JournalPageSheet {
 
-  _getHeaderButtons() {
-    const buttons = super._getHeaderButtons()
-      .filter(b => !b.label.startsWith('JOURNAL'));
-    if (game.user.isGM) {
-      buttons.unshift({
-        label: "Journal",
-        class: "entry-text",
-        icon: "fas fa-book",
-        onclick: async ev => {
-          const sheet = this.object.sheet;
-          await super.close()
-          this.object._sheet = null;
-          delete this.object.apps[sheet.appId];
-          await this.document.unsetFlag('core', 'sheetClass');
-          this.object.sheet.render(true);
-        }
-      })
-    }
-    return buttons;
-  }
-
-  close() {
-    _excaDelayedClose(this, () => super.close());
+  static get defaultOptions() {
+    const options = foundry.utils.mergeObject(super.defaultOptions, {
+      width: canvas.screenDimensions[0] * 0.50,
+      height: canvas.screenDimensions[1] * 0.75,
+      resizable: true
+    });
+    options.classes.push("exca");
+    return options;
   }
 
   async getData() {
@@ -117,21 +102,8 @@ class ExcalidrawJournal extends JournalSheet {
     };
   }
 
-  static get defaultOptions() {
-    const _default = super.defaultOptions;
-
-    return {
-      ..._default,
-      classes: ['sheet', 'excalidraw-journal', 'form'],
-      width: canvas.screenDimensions[0] * 0.50,
-      height: canvas.screenDimensions[1] * 0.75,
-      resizable: true,
-      template: `./modules/excalidraw-journals/excalidraw-sheet.hbs`
-    };
-  }
-
   get template() {
-    return `./modules/excalidraw-journals/excalidraw-sheet.hbs`;
+    return `modules/excalidraw-journals/excalidraw-sheet.hbs`;
   }
 
 }
@@ -172,21 +144,31 @@ class ExcalidrawItem extends ItemSheet {
 }
 
 // Adds Excalidraw as a Sheet Mode for Journal Entries
-Hooks.once('ready', function () {
+Hooks.once('init', function () {
   Actors.registerSheet('excalidraw-journals', ExcalidrawActor);
-  Journal.registerSheet('excalidraw-journals', ExcalidrawJournal);
+  // Journal.registerSheet('excalidraw-journals', ExcalidrawJournalPage);
+
+
+  // game.documentTypes.JournalEntryPage.push('exca');
+  DocumentSheetConfig.registerSheet(JournalEntryPage, "excalidraw-journals", ExcalidrawJournalPage, {
+    types: ["exca"],
+    makeDefault: true,
+    label: 'exca'
+  });
+
+
   Items.registerSheet('excalidraw-journals', ExcalidrawItem);
 
-  Hooks.on('getJournalSheetHeaderButtons', function(app, buttons) {
-    if (app.document.testUserPermission(game.user, 3) && app.object._getSheetClass().name !== 'ExcalidrawJournal') {
-      buttons.unshift({
-        label: "Excalidraw",
-        class: "entry-excalidraw",
-        icon: "fas fa-pen-alt",
-        onclick: async ev => _excaRenderSheet(app)
-      });
-    }
-  });
+  // Hooks.on('getJournalSheetHeaderButtons', function(app, buttons) {
+  //   if (app.document.testUserPermission(game.user, 3) && app.object._getSheetClass().name !== 'ExcalidrawJournal') {
+  //     buttons.unshift({
+  //       label: "Excalidraw",
+  //       class: "entry-excalidraw",
+  //       icon: "fas fa-pen-alt",
+  //       onclick: async ev => _excaRenderSheet(app)
+  //     });
+  //   }
+  // });
 });
 
 // Adds Journal Note offline Excalidraw to left controls

@@ -1,4 +1,10 @@
 ![GitHub all releases](https://img.shields.io/github/downloads/saif-ellafi/foundryvtt-excalidraw-journals/total?logo=GitHub) ![GitHub release (latest by date)](https://img.shields.io/github/downloads/saif-ellafi/foundryvtt-excalidraw-journals/latest/total) ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/saif-ellafi/foundryvtt-excalidraw-journals) ![GitHub issues](https://img.shields.io/github/issues-raw/saif-ellafi/foundryvtt-excalidraw-journals)
+# ABANDONED
+
+Please use [Journal Whiteboard](https://foundryvtt.com/packages/journal-whiteboard) instead, which is better and supported in Foundry V11.
+
+Thank you for supporting this module while it lived :)
+
 # Excalidraw Journals for Foundry VTT
 
 Excalidraw is a free and open source collaborative virtual whiteboard for sketching and diagrams. With this, you can brainstorm together very easily with your players.
